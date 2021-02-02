@@ -1,3 +1,28 @@
+From ```package.json```:
+```json
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.4.17"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+```
+
+And ```routes/verify_email.js```:
+
+```js
 const { VERIFY_USER_MUTATION } = require('../utils/user_queries')
 const hasuraGQLQuery = require('../utils/hasuraGQLQuery')
 
@@ -32,3 +57,4 @@ const handler = async (req, res) => {
 }
 
 module.exports = handler
+```
