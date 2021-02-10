@@ -12,7 +12,10 @@ const CREATE_USER_MUTATION = `
                 last_name: $last_name,
                 password: $password
             }
-        ) { id }
+        ) { 
+            id,
+            email 
+        }
     }
 `
 

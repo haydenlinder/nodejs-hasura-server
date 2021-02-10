@@ -1,4 +1,7 @@
-const { CREATE_USER_MUTATION, GET_USER_BY_EMAIL_QUERY } = require('../utils/user_queries')
+const { 
+    CREATE_USER_MUTATION, 
+    GET_USER_BY_EMAIL_QUERY 
+} = require('../utils/user_queries')
 const hasuraGQLQuery = require('../utils/hasuraGQLQuery')
 
 const handler = async (req, res) => {
@@ -31,14 +34,14 @@ const handler = async (req, res) => {
         req.headers
     )
 
-    console.log(insert_users_one)
+    const { id } = insert_users_one
 
     const { sendConfirmationEmail } = require('../utils/email_functions')
-    await sendConfirmationEmail({ to: email, userId: 1 })
+    await sendConfirmationEmail({ to: email, userId: id })
 
     return res.json({
         data: {
-            message: 'Please verify your email.'
+            message: `Verification link sent to ${email}. Please verify your email.`
         }
     })
 

@@ -3,6 +3,7 @@ const hasuraGQLQuery = require('../utils/hasuraGQLQuery')
 const { SERVER_SECRET } = process.env
 
 const handler = async (req, res) => {
+
     const { email, password } = req.body
 
     const { users } = await hasuraGQLQuery(
@@ -12,7 +13,7 @@ const handler = async (req, res) => {
     )
 
     if (!users[0]) throw { errors: 'No user with that email.' }
-    if (!users[0]?.verified) throw { errors: 'Please verify your email.' }
+    if (!users[0]?.verified) throw { errors: 'Please verify your email. We sent you an email with a link to verify.' }
 
     const bcrypt = require('bcrypt');
     const valid = await bcrypt.compareSync(password, users[0].password)
@@ -45,7 +46,7 @@ const handler = async (req, res) => {
         {
             // signed: true,
             httpOnly: true,
-            // https only 
+            // https only v
             // secure: true,
         }
     )
@@ -56,6 +57,7 @@ const handler = async (req, res) => {
             access_token
         }
     })
+
 }
 
 module.exports = handler
