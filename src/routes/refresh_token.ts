@@ -1,28 +1,32 @@
+import { Request, Response } from "express"
+
 const { SERVER_SECRET } = process.env
 
-const handler = async (req, res) => {
+export default async function handler (req: Request, res: Response) {
+    // Refresh token from cookies
+    console.log(JSON.stringify(res.getHeaders()))
     const { refresh_token } = req.cookies
-
-    if (!refresh_token) throw { errors: 'no token' }
-
+    // If no token, throw
+    if (!refresh_token) throw { errors: 'No token.' }
+    // Otherwise, verify the token
     const jwt = require('jsonwebtoken')
     const payload = jwt.verify(refresh_token, SERVER_SECRET)
-    if (!payload) throw { errors: 'invalid token' }
-
+    if (!payload) throw { errors: 'Invalid token.' }
+    // Get the user id
     const { user_id } = payload
-
+    // Create a new refresh_token
     const new_refresh_token = jwt.sign(
         { user_id },
         SERVER_SECRET,
         { expiresIn: '7d' }
     )
-
+    // And access_token
     const access_token = jwt.sign(
         { user_id },
         SERVER_SECRET,
         { expiresIn: '15m' }
     )
-
+    // Set the refresh_token in a cookie
     res.cookie(
         'refresh_token',
         new_refresh_token,
@@ -33,13 +37,12 @@ const handler = async (req, res) => {
             // secure: true,
         }
     )
-
+    // Return the access_token to be stored in memory on the client
     return res.json({
         data: {
             user_id,
             access_token
         }
     })
-}
 
-module.exports = handler
+}

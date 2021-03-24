@@ -1,7 +1,8 @@
-const hasuraGQLQuery = require('../utils/hasuraGQLQuery')
+import { Request, Response } from 'express'
+import hasuraGQLQuery from '../utils/hasuraGQLQuery'
 
-const handler = async (req, res) => {
-    console.log(req.body)
+export async function handler (req: Request, res: Response) {
+
     const { query, variables } = req.body
 
     const data = await hasuraGQLQuery(

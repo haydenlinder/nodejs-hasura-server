@@ -1,4 +1,7 @@
-const CREATE_USER_MUTATION = `
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LOGIN_USER_MUTATION = exports.GET_USER_BY_ID = exports.GET_USER_BY_REFRESH_TOKEN_QUERY = exports.VERIFY_USER_MUTATION = exports.GET_USER_BY_EMAIL_QUERY = exports.CREATE_USER_MUTATION = void 0;
+exports.CREATE_USER_MUTATION = `
     mutation (
         $email: String = "", 
         $first_name: String = "", 
@@ -17,9 +20,8 @@ const CREATE_USER_MUTATION = `
             email 
         }
     }
-`
-
-const GET_USER_BY_EMAIL_QUERY = `
+`;
+exports.GET_USER_BY_EMAIL_QUERY = `
     query ($email: String = "") {
         users(limit: 1, where: {email: {_eq: $email}}) {
             id,
@@ -27,36 +29,33 @@ const GET_USER_BY_EMAIL_QUERY = `
             verified
         }
     }
-`
-
-const VERIFY_USER_MUTATION = `
+`;
+exports.VERIFY_USER_MUTATION = `
     mutation ($id: bigint! = "") {
         update_users_by_pk(pk_columns: {id: $id}, _set: {verified: true}) {
             id,
             verified
         }
     }
-`
-
-const GET_USER_BY_REFRESH_TOKEN_QUERY = `
+`;
+exports.GET_USER_BY_REFRESH_TOKEN_QUERY = `
     query ($session_token: String = "") {
         users(limit: 1, where: {session_token: {_eq: $session_token}}) {
             id,
             email
         }
     }
-`
-
-const GET_USER_BY_ID = `
+`;
+exports.GET_USER_BY_ID = `
     query ($id: bigint! = "") {
         users_by_pk(id: $id) {
             email
             id
         }
     }
-`
-
-const LOGIN_USER_MUTATION = `
+`;
+// We're using jwt, so we shouldn't need this
+exports.LOGIN_USER_MUTATION = `
     mutation ($email: String = "", $session_token: String = "") {
         update_users(
             where: {email: {_eq: $email}}, 
@@ -70,14 +69,4 @@ const LOGIN_USER_MUTATION = `
             }
         }
     }
-`
-
-module.exports = {
-    CREATE_USER_MUTATION,
-    GET_USER_BY_EMAIL_QUERY,
-    GET_USER_BY_ID,
-    GET_USER_BY_REFRESH_TOKEN_QUERY,
-    LOGIN_USER_MUTATION,
-    VERIFY_USER_MUTATION
-}
-
+`;
