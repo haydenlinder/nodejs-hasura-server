@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+  server:
+    container_name: jobtron-auth-server
+    build: 
+      context: ./
+      dockerfile: dev.Dockerfile
+    volumes:
+      - /app/node_modules/bcrypt/
+      - ./:/app
+    ports:
+      - "8081:8081"
+    environment:
+      PORT: 8081
+      SERVER_SECRET: abcd
+      HASURA_GQL_URL: 'http://jobtron-db:8080/v1/graphql'
+      HASURA_GQL_SECRET: 1234
+      EMAIL_HOST: smtp.zoho.com
+      EMAIL_USER: abocabo@abocabo.com
+      EMAIL_PASSWORD: 5678

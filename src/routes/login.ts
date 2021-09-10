@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 
-const { GET_USER_BY_EMAIL_QUERY, LOGIN_USER_MUTATION } = require('../utils/user_queries')
-const hasuraGQLQuery = require('../utils/hasuraGQLQuery')
+import { GET_USER_BY_EMAIL_QUERY, LOGIN_USER_MUTATION } from '../utils/user_queries'
+import hasuraGQLQuery from '../utils/hasuraGQLQuery'
 const { SERVER_SECRET } = process.env
 
 export default async function handler (req: Request, res: Response) {
@@ -19,13 +19,13 @@ export default async function handler (req: Request, res: Response) {
     // Since the user is valid, make it easy to access
     const user: { id: number, password: string, verified: boolean } = users[0]
     // Check if password is correct
-    const bcrypt = require('bcrypt')
+    const bcrypt = await import('bcrypt')
     const valid = await bcrypt.compareSync(password, user.password)
     // If not, throw
     if (!valid) throw { errors: 'Wrong password.' }
     // Generate a refresh token
-    const jwt = require('jsonwebtoken')
-    const refresh_token = jwt.sign({ user_id: user.id }, SERVER_SECRET)
+    const jwt = await import('jsonwebtoken')
+    const refresh_token = jwt.sign({ user_id: user.id }, SERVER_SECRET!)
     // This shouldn't be needed
     // const { update_users } = await hasuraGQLQuery(
     //     LOGIN_USER_MUTATION,
@@ -40,7 +40,7 @@ export default async function handler (req: Request, res: Response) {
     // Generate access token
     const access_token = jwt.sign(
         { user_id: user.id },
-        SERVER_SECRET,
+        SERVER_SECRET!,
         { expiresIn: '15m' }
     )
     // Add refresh token to cookies
