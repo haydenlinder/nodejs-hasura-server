@@ -24,7 +24,7 @@ docker network connect jobtron-net jobtron-auth-server
 ### 3. Environment variables:
   - PORT: 8081
   - SERVER_SECRET: 1234 (`HASURA_GRAPHQL_ADMIN_SECRET` from [jobtron-graphql-engine](https://github.com/haydenlinder/jobtron-graphql-engine/blob/master/docker-compose.yml) )
-  - HASURA_GQL_URL: http://localhost:8080/v1/graphql
+  - HASURA_GQL_URL: http://jobtron-db:8080/v1/graphql (jobtron-db is the name of the container running the graphql engine)
   - HASURA_GQL_SECRET: 1234
   - EMAIL_HOST: smtp.zoho.com
   - EMAIL_USER: admin@jobtron.com
