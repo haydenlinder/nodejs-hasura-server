@@ -10,6 +10,8 @@ services:
       - ./:/app
     ports:
       - "8081:8081"
+    networks:
+      - jobtron-net
     environment:
       PORT: 8081
       SERVER_SECRET: abcd
@@ -18,3 +20,7 @@ services:
       EMAIL_HOST: smtp.zoho.com
       EMAIL_USER: abocabo@abocabo.com
       EMAIL_PASSWORD: 5678
+networks:
+  jobtron-net: 
+    name: jobtron-net
+    driver: bridge
