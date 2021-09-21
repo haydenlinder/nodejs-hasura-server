@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import hasuraGQLQuery from '../utils/hasuraGQLQuery'
 
-export async function handler (req: Request, res: Response) {
+export default async function handler (req: Request, res: Response) {
 
     const { query, variables } = req.body
 

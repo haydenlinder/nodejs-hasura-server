@@ -15,12 +15,12 @@ export default async function handler (req: Request, res: Response) {
     )
     // Throw if no user or if they are not verified
     if (!users[0]) throw { errors: 'No user with that email.' }
-    if (!users[0]?.verified) throw { errors: 'Please verify your email. We sent you an email with a link to verify.' }
+    if (!users[0]?.is_verified) throw { errors: 'Please verify your email. We sent you an email with a link to verify.' }
     // Since the user is valid, make it easy to access
-    const user: { id: number, password: string, verified: boolean } = users[0]
+    const user: { id: number, password_hash: string, is_verified: boolean } = users[0]
     // Check if password is correct
     const bcrypt = await import('bcrypt')
-    const valid = await bcrypt.compareSync(password, user.password)
+    const valid = await bcrypt.compareSync(password, user.password_hash)
     // If not, throw
     if (!valid) throw { errors: 'Wrong password.' }
     // Generate a refresh token

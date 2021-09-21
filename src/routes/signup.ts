@@ -18,7 +18,7 @@ export default async function (req: Request, res: Response) {
     // If so, throw an error depending on the verified property
     if (users[0]) {
         throw { 
-            errors: users[0]?.verified ? 
+            errors: users[0]?.is_verified ? 
             'User with that email already exists.' 
             : 'Please verify your email.' 
         }
@@ -31,7 +31,7 @@ export default async function (req: Request, res: Response) {
         CREATE_USER_MUTATION,
         {
             email: email,
-            password: password_hash,
+            password_hash,
         },
         req.headers
     )

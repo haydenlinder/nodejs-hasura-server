@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-export async function handler (req: Request, res: Response) {
+export default async function handler (req: Request, res: Response) {
     // Set the refresh_token to an empty string, 
     // preventing generation of a new access_token
     res.cookie(

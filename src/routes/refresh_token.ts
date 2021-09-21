@@ -4,7 +4,6 @@ const { SERVER_SECRET } = process.env
 
 export default async function handler (req: Request, res: Response) {
     // Refresh token from cookies
-    console.log(JSON.stringify(res.getHeaders()))
     const { refresh_token } = req.cookies
     // If no token, throw
     if (!refresh_token) throw { errors: 'No token.' }
