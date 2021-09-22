@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = void 0;
 async function handler(req, res) {
     // Set the refresh_token to an empty string, 
     // preventing generation of a new access_token
@@ -16,4 +15,4 @@ async function handler(req, res) {
         data: {}
     });
 }
-exports.handler = handler;
+exports.default = handler;

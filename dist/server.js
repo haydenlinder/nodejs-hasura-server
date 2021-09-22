@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const middlewares_1 = require("./utils/middlewares");
 const { PORT } = process.env;
-const api = express_1.default();
+const api = (0, express_1.default)();
 api.use(body_parser_1.default.json(), middlewares_1.headers, middlewares_1.cookieParser);
 api.post('/:route', middlewares_1.logger, async (req, res) => {
     try {

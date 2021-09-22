@@ -23,19 +23,19 @@ exports.cookieParser = cookieParser;
 function logger(req, res, next) {
     console.log(`
         PROCESSING ${req.method} to /${req.params.route}\n
-        params: ${JSON.stringify(req.params)}\n
-        query: ${JSON.stringify(req.query)}\n
-        body: ${JSON.stringify(req.body)}\n
-        request headers: ${JSON.stringify(req.headers)}\n
-        response headers: ${JSON.stringify(res.getHeaders())}\n
+        PARAMS: ${JSON.stringify(req.params)}\n
+        QUERY: ${JSON.stringify(req.query)}\n
+        BODY: ${JSON.stringify(req.body)}\n
+        REQUEST HEADERS: ${JSON.stringify(req.headers)}\n
+        RESPONSE HEADERS: ${JSON.stringify(res.getHeaders())}\n
     `);
     next();
 }
 exports.logger = logger;
 function headers(req, res, next) {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type, Accept, Authorization, Origin");
-    res.setHeader("Access-Control-Allow-Origin", req.headers.host || '');
-    req.headers['Access-Control-Allow-Origin'] = req.headers.host;
+    // TODO: use ENV
+    res.setHeader("Access-Control-Allow-Origin", 'http://localhost:3000');
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
     res.setHeader("Access-Control-Allow-Credentials", 'true');
     next();

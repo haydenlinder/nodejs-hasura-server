@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { SERVER_SECRET } = process.env;
 async function handler(req, res) {
     // Refresh token from cookies
-    console.log(JSON.stringify(res.getHeaders()));
     const { refresh_token } = req.cookies;
     // If no token, throw
     if (!refresh_token)

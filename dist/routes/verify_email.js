@@ -21,7 +21,7 @@ async function default_1(req, res) {
     // Otherwise, Extract the user's id
     const { user_id } = payload;
     // And set their verified property to true
-    const { update_users_by_pk } = await hasuraGQLQuery_1.default(user_queries_1.VERIFY_USER_MUTATION, {
+    const { update_users_by_pk } = await (0, hasuraGQLQuery_1.default)(user_queries_1.VERIFY_USER_MUTATION, {
         id: user_id,
     }, req.headers);
     // Return a success message

@@ -11,7 +11,7 @@ async function hasuraGQLQuery(query, variables, oldHeaders) {
     // Set admin secret to access gql server
     headers['x-hasura-admin-secret'] = HASURA_GQL_SECRET;
     // Fetch response
-    const response = await node_fetch_1.default(HASURA_GQL_URL, {
+    const response = await (0, node_fetch_1.default)(HASURA_GQL_URL, {
         method: 'POST',
         headers,
         body: JSON.stringify({

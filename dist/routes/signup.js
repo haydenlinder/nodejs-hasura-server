@@ -9,11 +9,11 @@ async function default_1(req, res) {
     // These better be available
     const { email, password } = req.body;
     //  Check if there is already a user with that email
-    const { users } = await hasuraGQLQuery_1.default(user_queries_1.GET_USER_BY_EMAIL_QUERY, { email: email }, req.headers);
+    const { users } = await (0, hasuraGQLQuery_1.default)(user_queries_1.GET_USER_BY_EMAIL_QUERY, { email: email }, req.headers);
     // If so, throw an error depending on the verified property
     if (users[0]) {
         throw {
-            errors: users[0]?.verified ?
+            errors: users[0]?.is_verified ?
                 'User with that email already exists.'
                 : 'Please verify your email.'
         };
@@ -22,9 +22,9 @@ async function default_1(req, res) {
     const bcrypt = require('bcrypt');
     const password_hash = await bcrypt.hash(password, 10);
     // And save the user
-    const { insert_users_one } = await hasuraGQLQuery_1.default(user_queries_1.CREATE_USER_MUTATION, {
+    const { insert_users_one } = await (0, hasuraGQLQuery_1.default)(user_queries_1.CREATE_USER_MUTATION, {
         email: email,
-        password: password_hash,
+        password_hash,
     }, req.headers);
     // Extract the id
     const { id } = insert_users_one;

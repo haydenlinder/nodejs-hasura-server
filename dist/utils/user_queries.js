@@ -6,14 +6,14 @@ exports.CREATE_USER_MUTATION = `
         $email: String = "", 
         $first_name: String = "", 
         $last_name: String = "", 
-        $password: String = ""
+        $password_hash: String = ""
     ) {
         insert_users_one(
             object: {
                 email: $email, 
                 first_name: $first_name,
                 last_name: $last_name,
-                password: $password
+                password_hash: $password_hash
             }
         ) { 
             id,
@@ -25,16 +25,16 @@ exports.GET_USER_BY_EMAIL_QUERY = `
     query ($email: String = "") {
         users(limit: 1, where: {email: {_eq: $email}}) {
             id,
-            password,
-            verified
+            password_hash,
+            is_verified
         }
     }
 `;
 exports.VERIFY_USER_MUTATION = `
     mutation ($id: bigint! = "") {
-        update_users_by_pk(pk_columns: {id: $id}, _set: {verified: true}) {
+        update_users_by_pk(pk_columns: {id: $id}, _set: {is_verified: true}) {
             id,
-            verified
+            is_verified
         }
     }
 `;
