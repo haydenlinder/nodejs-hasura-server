@@ -33,7 +33,7 @@ export function logger (req: Request, res: Response, next: NextFunction) {
 export function headers (req: Request, res: Response, next: NextFunction) {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type, Accept, Authorization, Origin")
     // TODO: use ENV
-    res.setHeader("Access-Control-Allow-Origin", '*')
+    res.setHeader("Access-Control-Allow-Origin", 'https://jobtron-client.herokuapp.com')
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE")
     res.setHeader("Access-Control-Allow-Credentials", 'true')
     next()
