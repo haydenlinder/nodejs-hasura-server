@@ -8,7 +8,6 @@ export default async function hasuraGQLQuery (query: string, variables: object, 
     // Set admin secret to access gql server
     const headers: RequestInit["headers"] = {};
     headers['x-hasura-admin-secret'] = HASURA_GQL_SECRET!
-    console.log({HASURA_GQL_SECRET})
     // Fetch response
     const response = await fetch(
         HASURA_GQL_URL!,
