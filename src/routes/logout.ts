@@ -11,6 +11,7 @@ export default async function handler (req: Request, res: Response) {
             httpOnly: true,
             // https only 
             secure: true,
+            sameSite: 'none'
         }
     )
     // Return an empty object. On the client, 
