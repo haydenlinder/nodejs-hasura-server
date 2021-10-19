@@ -26,17 +26,6 @@ export default async function handler (req: Request, res: Response) {
     // Generate a refresh token
     const jwt = await import('jsonwebtoken')
     const refresh_token = jwt.sign({ user_id: user.id }, SERVER_SECRET!)
-    // This shouldn't be needed
-    // const { update_users } = await hasuraGQLQuery(
-    //     LOGIN_USER_MUTATION,
-    //     {
-    //         email: email,
-    //         session_token: refresh_token
-    //     },
-    //     req.headers
-    // )
-
-    // const user = update_users.returning[0]
     // Generate access token
     const access_token = jwt.sign(
         { user_id: user.id },
@@ -51,7 +40,8 @@ export default async function handler (req: Request, res: Response) {
             // signed: true,
             httpOnly: true,
             // https only v
-            // secure: true,
+            secure: true,
+            sameSite: 'none'
         }
     )
     // Return access_token to be stored in memory

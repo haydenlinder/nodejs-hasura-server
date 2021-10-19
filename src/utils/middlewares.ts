@@ -30,11 +30,23 @@ export function logger (req: Request, res: Response, next: NextFunction) {
     next()
 }
 
-export function headers (req: Request, res: Response, next: NextFunction) {
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type, Accept, Authorization, Origin")
+export function accessControlHeaders(req: Request, res: Response, next: NextFunction) {
+    const origin = req.headers.origin || '';
     // TODO: use ENV
-    res.setHeader("Access-Control-Allow-Origin", 'https://jobtron-client.herokuapp.com')
+    console.log({origin})
+    const allowedOrigins = [
+        'http://localhost:3000',
+        'https://jobtron-client.herokuapp.com'
+    ];
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type, Accept, Authorization, Origin")
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE")
     res.setHeader("Access-Control-Allow-Credentials", 'true')
+    return next();
+};
+
+export function headers (req: Request, res: Response, next: NextFunction) {
     next()
 }

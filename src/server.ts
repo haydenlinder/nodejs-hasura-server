@@ -1,12 +1,12 @@
 import express from "express"
 import parser from 'body-parser'
-import { cookieParser, headers, logger } from './utils/middlewares'
+import { accessControlHeaders, cookieParser, headers, logger } from './utils/middlewares'
 
 const { PORT } = process.env
 
 const api = express()
 
-api.use(parser.json(), headers, cookieParser)
+api.use(parser.json(), headers, cookieParser, accessControlHeaders)
 
 api.post('/:route', logger, async (req, res) => {
     try {
