@@ -10,7 +10,7 @@ export default async function handler (req: Request, res: Response) {
             // signed: true,
             httpOnly: true,
             // https only 
-            // secure: true,
+            secure: true,
         }
     )
     // Return an empty object. On the client, 
