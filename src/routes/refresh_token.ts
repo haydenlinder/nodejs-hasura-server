@@ -6,11 +6,11 @@ export default async function handler (req: Request, res: Response) {
     // Refresh token from cookies
     const { refresh_token } = req.cookies
     // If no token, throw
-    if (!refresh_token) throw { errors: 'No token.' }
+    if (!refresh_token) return res.status(401).json({ errors: 'No token.' });
     // Otherwise, verify the token
     const jwt = require('jsonwebtoken')
     const payload = jwt.verify(refresh_token, SERVER_SECRET)
-    if (!payload) throw { errors: 'Invalid token.' }
+    if (!payload) return res.status(401).json({ errors: 'Invalid token.' });
     // Get the user id
     const { user_id } = payload
     // Create a new refresh_token
@@ -25,23 +25,20 @@ export default async function handler (req: Request, res: Response) {
         SERVER_SECRET,
         { expiresIn: '15m' }
     )
-    // Set the refresh_token in a cookie
-    res.cookie(
+    // Set the refresh_token in a cookie and
+    // return the access_token to be stored in memory on the client
+    return res.cookie(
         'refresh_token',
         new_refresh_token,
         {
-            // signed: true,
-            httpOnly: true,
-            // https only 
-            // secure: true,
+            // https or localhost only 
+            secure: true,
         }
-    )
-    // Return the access_token to be stored in memory on the client
-    return res.json({
+    ).json({
         data: {
             user_id,
             access_token
         }
-    })
+    });
 
 }

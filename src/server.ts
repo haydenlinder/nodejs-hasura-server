@@ -1,19 +1,22 @@
 import express from "express"
-import parser from 'body-parser'
+import { json } from 'body-parser'
 import { accessControlHeaders, cookieParser, headers, logger } from './utils/middlewares'
 
 const { PORT } = process.env
 
 const api = express()
 
-api.use(parser.json(), headers, cookieParser, accessControlHeaders)
+api.use(json(), headers, cookieParser, accessControlHeaders)
 
 api.post('/:route', logger, async (req, res) => {
     try {
-        const handler = require(`./routes/${req.params.route}`).default
-        return await handler(req, res);
+        // Dynamic route
+        const handler = require(`./routes/${req.params.route}`).default;
+        const response = await handler(req, res);
+        console.log({response});
+        return response
     } catch (errors) {
-        console.error({errors})
+        console.error({errors});
         return res.json({errors});
     }
 });
